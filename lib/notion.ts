@@ -1,4 +1,5 @@
 import { Client } from '@notionhq/client'
+import { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -27,7 +28,7 @@ export const getBlocks = async (blockId) => {
   // Fetches all child blocks recursively - be mindful of rate limits if you have large amounts of nested blocks
   // See https://developers.notion.com/docs/working-with-page-content#reading-nested-blocks
   const childBlocks = results.map(async (block) => {
-    if (block.has_children) {
+    if ((block as BlockObjectResponse).has_children) {
       const children = await getBlocks(block.id)
       return { ...block, children }
     }

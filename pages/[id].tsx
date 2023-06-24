@@ -1,9 +1,10 @@
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { getDatabase, getPage, getBlocks } from '../lib/notion'
-import { databaseId } from './index.js'
+import { databaseId } from './index'
 import styles from './post.module.css'
+import { GetStaticPaths, GetStaticProps } from 'next'
 
 export const Text = ({ text }) => {
   if (!text) {
@@ -226,7 +227,7 @@ export default function Post({ page, blocks }) {
   )
 }
 
-export const getStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const database = await getDatabase(databaseId)
   return {
     paths: database.map((page) => ({ params: { id: page.id } })),
@@ -234,8 +235,8 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps = async (context) => {
-  const { id } = context.params
+export const getStaticProps: GetStaticProps<{}, { id: string }> = async (context) => {
+  const id = context.params?.id
   const page = await getPage(id)
   const blocks = await getBlocks(id)
 
