@@ -1,0 +1,5 @@
+{
+    "extends": [
+      "coldsurfers/react-typescript" // for react-typescript
+    ]
+}
