@@ -94,32 +94,24 @@ export const getBlocks = async (blockId) => {
 
   // Fetches all child blocks recursively - be mindful of rate limits if you have large amounts of nested blocks
   // See https://developers.notion.com/docs/working-with-page-content#reading-nested-blocks
-  const childBlocks = results.map(async (block) => {
-    if ((block as BlockObjectResponse).has_children) {
+  const generatedBlocks = results.map(async (block) => {
+    const generated = {
+      ...block
+    } as BlockObjectResponse
+    if (generated.has_children) {
       const children = await getBlocks(block.id)
-      return { ...block, children }
+      generated['children'] = children
     }
-    return block
-  })
-
-  const imageBlocks = results.map(async (block) => {
-    if ((block as BlockObjectResponse).type === 'image') {
-      const imageBlock = block as ImageBlockObjectResponse
-      if (imageBlock.image.type === 'file') {
-        const cloudinary = await uploadCloudinary(imageBlock.image.file.url)
-        const cloudinaryImageBlock = {
-          ...imageBlock,
-        }
-        if (cloudinaryImageBlock.image.type === 'file') {
-          cloudinaryImageBlock.image.file.url = cloudinary.secure_url
-        }
-        return cloudinaryImageBlock
+    if (generated.type === 'image') {
+      if (generated.image.type === 'file') {
+        const cloudinary = await uploadCloudinary(generated.image.file.url)
+        generated.image.file.url = cloudinary.secure_url
       }
     }
-    return block
+    return generated
   })
 
-  return await Promise.all(childBlocks.concat(imageBlocks)).then((blocks) =>
+  return await Promise.all(generatedBlocks).then((blocks) =>
     blocks.reduce((acc, curr) => {
       if (curr.type === 'bulleted_list_item') {
         if (acc[acc.length - 1]?.type === 'bulleted_list') {
