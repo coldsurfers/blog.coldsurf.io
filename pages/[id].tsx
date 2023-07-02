@@ -245,6 +245,6 @@ export const getStaticProps: GetStaticProps<{}, { id: string }> = async (context
       page,
       blocks,
     },
-    revalidate: 60 * 60,
+    revalidate: false
   }
 }
