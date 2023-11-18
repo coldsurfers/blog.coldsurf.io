@@ -12,6 +12,8 @@ export default function Home({ posts }) {
       <Head>
         <title>Notion Next.js blog</title>
         <link rel="icon" href="/favicon.ico" />
+        {/* google search console */}
+        <meta name="google-site-verification" content="t8pam4eI0ydfgF_W2Js3Q9bdfCsbvZA83PSE2JDh1ww" />
       </Head>
 
       <main className={styles.container}>
