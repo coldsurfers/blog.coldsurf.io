@@ -1,5 +1,8 @@
 import { Client } from '@notionhq/client'
-import { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import {
+  BlockObjectResponse,
+  PartialBlockObjectResponse,
+} from '@notionhq/client/build/src/api-endpoints'
 import fs from 'fs'
 import sha1 from 'sha1'
 import axios from 'axios'
@@ -103,7 +106,7 @@ export const getBlocks = async (blockId) => {
   blockId = blockId.replaceAll('-', '')
 
   let next
-  const list = []
+  const list: (BlockObjectResponse | PartialBlockObjectResponse)[] = []
   while (next) {
     const { results, has_more, next_cursor } =
       await notion.blocks.children.list({
@@ -123,7 +126,9 @@ export const getBlocks = async (blockId) => {
   const generatedBlocks = list.map(async (block) => {
     const generated = {
       ...block,
-    } as BlockObjectResponse
+    } as BlockObjectResponse & {
+      children: any
+    }
     if (generated.has_children) {
       const children = await getBlocks(block.id)
       generated.children = children
@@ -137,7 +142,7 @@ export const getBlocks = async (blockId) => {
     return generated
   })
 
-  return await Promise.all(generatedBlocks).then((blocks) =>
+  const res = await Promise.all(generatedBlocks).then((blocks) =>
     blocks.reduce((acc, curr) => {
       if (curr.type === 'bulleted_list_item') {
         if (acc[acc.length - 1]?.type === 'bulleted_list') {
@@ -165,4 +170,6 @@ export const getBlocks = async (blockId) => {
       return acc
     }, [])
   )
+
+  return res
 }
