@@ -13,7 +13,10 @@ export default function Home({ posts }) {
         <title>Blog | coldsurf.io</title>
         <link rel="icon" href="/favicon.ico" />
         {/* google search console */}
-        <meta name="google-site-verification" content="t8pam4eI0ydfgF_W2Js3Q9bdfCsbvZA83PSE2JDh1ww" />
+        <meta
+          name="google-site-verification"
+          content="t8pam4eI0ydfgF_W2Js3Q9bdfCsbvZA83PSE2JDh1ww"
+        />
       </Head>
 
       <main className={styles.container}>
@@ -54,6 +57,6 @@ export const getStaticProps = async () => {
     props: {
       posts: database,
     },
-    revalidate: false
+    revalidate: false,
   }
 }
