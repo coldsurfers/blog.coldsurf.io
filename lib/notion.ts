@@ -105,13 +105,13 @@ export const getPage = async (pageId) => {
 export const getBlocks = async (blockId) => {
   blockId = blockId.replaceAll('-', '')
 
-  let next
+  let next: string | undefined = ''
   const list: (BlockObjectResponse | PartialBlockObjectResponse)[] = []
-  while (next) {
+  while (typeof next === 'string') {
     const { results, has_more, next_cursor } =
       await notion.blocks.children.list({
         block_id: blockId,
-        start_cursor: next,
+        start_cursor: next || undefined,
       })
     if (has_more && next_cursor) {
       next = next_cursor
