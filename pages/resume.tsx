@@ -9,10 +9,14 @@ export default function ResumePage() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <article className={styles.container}>
+                <h1 className={styles.name}>
+                    Resume
+                </h1>
                 <section>
-                    <h1>Summary</h1>
+                    <h2>Summary</h2>
                     <div>
                         <p>Hello! My name is DongHo Choi</p>
+                        <p>Frontend Developer since Nov. 2018</p>
                     </div>
                     <ul>
                         <li>Email: yungblud@kakao.com</li>
