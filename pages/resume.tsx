@@ -1,0 +1,3 @@
+function ResumePage() {
+    return null
+}
