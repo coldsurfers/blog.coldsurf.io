@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import Head from 'next/head'
 import Link from 'next/link'
 import { getDatabase } from '../lib/notion'

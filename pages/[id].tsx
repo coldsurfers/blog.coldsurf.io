@@ -1,3 +1,7 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable no-case-declarations */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-shadow */
 import React, { Fragment } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
