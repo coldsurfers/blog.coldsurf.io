@@ -129,7 +129,20 @@ const renderBlock = (block) => {
     case 'divider':
       return <hr key={id} />
     case 'quote':
-      return <blockquote key={id}>{value.rich_text[0].plain_text}</blockquote>
+      return <blockquote
+                key={id}
+                style={{
+                  borderLeft: '4px solid #ffffff',
+                  background: '#000000',
+                  marginLeft: '0px',
+                  paddingLeft: '1rem',
+                  paddingTop: '0.5rem',
+                  paddingBottom: '0.5rem',
+                  fontWeight: value.rich_text[0].annotations.bold ? 'bold' : 'normal',
+                  fontStyle: value.rich_text[0].annotations.bold ? 'italic' : 'normal'
+                }}>
+                {value.rich_text[0].plain_text}
+              </blockquote>
     case 'code':
       return (
         <pre className={styles.pre}>
@@ -192,6 +205,8 @@ const renderBlock = (block) => {
     case 'column': {
       return <div>{block.children.map((child) => renderBlock(child))}</div>
     }
+    case 'callout':
+      return <div style={{ fontSize: '1rem', fontWeight: 'bold', background: '#000000', padding: '0.5rem' }}>{value.icon.emoji} {value.rich_text[0].plain_text}</div>
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type

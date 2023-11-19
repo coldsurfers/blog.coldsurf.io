@@ -1,5 +1,5 @@
 import { Client } from '@notionhq/client'
-import { BlockObjectResponse, ImageBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import fs from 'fs'
 import sha1 from 'sha1'
 import axios from 'axios'
@@ -87,14 +87,24 @@ export const getPage = async (pageId) => {
 export const getBlocks = async (blockId) => {
   blockId = blockId.replaceAll('-', '')
 
-  const { results } = await notion.blocks.children.list({
-    block_id: blockId,
-    page_size: 100,
-  })
+  let next = undefined
+  const list = []
+  while (!!next) {
+    const { results, has_more, next_cursor } = await notion.blocks.children.list({
+      block_id: blockId,
+      start_cursor: next
+    })
+    if (has_more && next_cursor) {
+      next = next_cursor
+    } else {
+      next = undefined
+    }
+    list.push(...results)
+  }
 
   // Fetches all child blocks recursively - be mindful of rate limits if you have large amounts of nested blocks
   // See https://developers.notion.com/docs/working-with-page-content#reading-nested-blocks
-  const generatedBlocks = results.map(async (block) => {
+  const generatedBlocks = list.map(async (block) => {
     const generated = {
       ...block
     } as BlockObjectResponse
