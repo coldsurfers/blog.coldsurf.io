@@ -1,10 +1,15 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable no-case-declarations */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-shadow */
 import React, { Fragment } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { getDatabase, getPage, getBlocks } from '../lib/notion'
+// eslint-disable-next-line import/no-cycle
 import { databaseId } from './index'
 import styles from './post.module.css'
-import { GetStaticPaths, GetStaticProps } from 'next'
 
 export const Text = ({ text }) => {
   if (!text) {
@@ -13,6 +18,7 @@ export const Text = ({ text }) => {
   return text.map((value) => {
     const {
       annotations: { bold, code, color, italic, strikethrough, underline },
+      // eslint-disable-next-line no-shadow
       text,
     } = value
     return (
@@ -129,7 +135,25 @@ const renderBlock = (block) => {
     case 'divider':
       return <hr key={id} />
     case 'quote':
-      return <blockquote key={id}>{value.rich_text[0].plain_text}</blockquote>
+      return (
+        <blockquote
+          key={id}
+          style={{
+            borderLeft: '4px solid #ffffff',
+            background: '#000000',
+            marginLeft: '0px',
+            paddingLeft: '1rem',
+            paddingTop: '0.5rem',
+            paddingBottom: '0.5rem',
+            fontWeight: value.rich_text[0].annotations.bold ? 'bold' : 'normal',
+            fontStyle: value.rich_text[0].annotations.bold
+              ? 'italic'
+              : 'normal',
+          }}
+        >
+          {value.rich_text[0].plain_text}
+        </blockquote>
+      )
     case 'code':
       return (
         <pre className={styles.pre}>
@@ -192,6 +216,19 @@ const renderBlock = (block) => {
     case 'column': {
       return <div>{block.children.map((child) => renderBlock(child))}</div>
     }
+    case 'callout':
+      return (
+        <div
+          style={{
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            background: '#000000',
+            padding: '0.5rem',
+          }}
+        >
+          {value.icon.emoji} {value.rich_text[0].plain_text}
+        </div>
+      )
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
@@ -235,7 +272,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps<{}, { id: string }> = async (context) => {
+export const getStaticProps: GetStaticProps<{}, { id: string }> = async (
+  context
+) => {
   const id = context.params?.id
   const page = await getPage(id)
   const blocks = await getBlocks(id)
@@ -245,6 +284,6 @@ export const getStaticProps: GetStaticProps<{}, { id: string }> = async (context
       page,
       blocks,
     },
-    revalidate: false
+    revalidate: false,
   }
 }

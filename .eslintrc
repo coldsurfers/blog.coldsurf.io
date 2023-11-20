@@ -1,5 +1,14 @@
 {
     "extends": [
-        "next"
-    ]
+        "next",
+        "coldsurfers", // for nodejs-typescript, or 'coldsurfers/nodejs-typescript'
+        "coldsurfers/react-typescript" // for react-typescript
+    ],
+    "rules": {
+        "no-bitwise": "off",
+        "camelcase": "off",
+        "no-param-reassign": "off",
+        "no-await-in-loop": "off",
+        "no-return-await": "off"
+    }
 }
