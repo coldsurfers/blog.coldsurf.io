@@ -1,58 +1,10 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable no-case-declarations */
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-shadow */
-import React, { Fragment } from 'react'
-import Head from 'next/head'
+import { Fragment } from 'react'
 import Link from 'next/link'
-import { GetStaticPaths, GetStaticProps } from 'next'
-import { getDatabase, getPage, getBlocks } from '../lib/notion'
-// eslint-disable-next-line import/no-cycle
-import { databaseId } from './index'
-import styles from './post.module.css'
 
-export const Text = ({ text }) => {
-  if (!text) {
-    return null
-  }
-  return text.map((value) => {
-    const {
-      annotations: { bold, code, color, italic, strikethrough, underline },
-      // eslint-disable-next-line no-shadow
-      text,
-    } = value
-    return (
-      <span
-        className={[
-          bold ? styles.bold : '',
-          code ? styles.code : '',
-          italic ? styles.italic : '',
-          strikethrough ? styles.strikethrough : '',
-          underline ? styles.underline : '',
-        ].join(' ')}
-        style={color !== 'default' ? { color } : {}}
-        key={text.content}
-      >
-        {text.link ? <a href={text.link.url}>{text.content}</a> : text.content}
-      </span>
-    )
-  })
-}
+import Text from '../text'
+import styles from '../../styles/post.module.css'
 
-const renderNestedList = (block) => {
-  const { type } = block
-  const value = block[type]
-  if (!value) return null
-
-  const isNumberedList = value.children[0].type === 'numbered_list_item'
-
-  if (isNumberedList) {
-    return <ol>{value.children.map((block) => renderBlock(block))}</ol>
-  }
-  return <ul>{value.children.map((block) => renderBlock(block))}</ul>
-}
-
-const renderBlock = (block) => {
+export function renderBlock(block) {
   const { type, id } = block
   const value = block[type]
 
@@ -60,25 +12,25 @@ const renderBlock = (block) => {
     case 'paragraph':
       return (
         <p>
-          <Text text={value.rich_text} />
+          <Text title={value.rich_text} />
         </p>
       )
     case 'heading_1':
       return (
         <h1>
-          <Text text={value.rich_text} />
+          <Text title={value.rich_text} />
         </h1>
       )
     case 'heading_2':
       return (
         <h2>
-          <Text text={value.rich_text} />
+          <Text title={value.rich_text} />
         </h2>
       )
     case 'heading_3':
       return (
         <h3>
-          <Text text={value.rich_text} />
+          <Text title={value.rich_text} />
         </h3>
       )
     case 'bulleted_list': {
@@ -91,7 +43,8 @@ const renderBlock = (block) => {
     case 'numbered_list_item':
       return (
         <li key={block.id}>
-          <Text text={value.rich_text} />
+          <Text title={value.rich_text} />
+          {/* eslint-disable-next-line no-use-before-define */}
           {!!value.children && renderNestedList(block)}
         </li>
       )
@@ -100,7 +53,7 @@ const renderBlock = (block) => {
         <div>
           <label htmlFor={id}>
             <input type="checkbox" id={id} defaultChecked={value.checked} />{' '}
-            <Text text={value.rich_text} />
+            <Text title={value.rich_text} />
           </label>
         </div>
       )
@@ -108,7 +61,7 @@ const renderBlock = (block) => {
       return (
         <details>
           <summary>
-            <Text text={value.rich_text} />
+            <Text title={value.rich_text} />
           </summary>
           {block.children?.map((child) => (
             <Fragment key={child.id}>{renderBlock(child)}</Fragment>
@@ -118,11 +71,11 @@ const renderBlock = (block) => {
     case 'child_page':
       return (
         <div className={styles.childPage}>
-          <strong>{value.title}</strong>
+          <strong>{value?.title}</strong>
           {block.children.map((child) => renderBlock(child))}
         </div>
       )
-    case 'image':
+    case 'image': {
       const src =
         value.type === 'external' ? value.external.url : value.file.url
       const caption = value.caption ? value.caption[0]?.plain_text : ''
@@ -132,6 +85,7 @@ const renderBlock = (block) => {
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       )
+    }
     case 'divider':
       return <hr key={id} />
     case 'quote':
@@ -162,41 +116,49 @@ const renderBlock = (block) => {
           </code>
         </pre>
       )
-    case 'file':
-      const src_file =
+    case 'file': {
+      const srcFile =
         value.type === 'external' ? value.external.url : value.file.url
-      const splitSourceArray = src_file.split('/')
+      const splitSourceArray = srcFile.split('/')
       const lastElementInArray = splitSourceArray[splitSourceArray.length - 1]
-      const caption_file = value.caption ? value.caption[0]?.plain_text : ''
+      const captionFile = value.caption ? value.caption[0]?.plain_text : ''
       return (
         <figure>
           <div className={styles.file}>
             📎{' '}
-            <Link href={src_file} passHref>
+            <Link href={srcFile} passHref>
               {lastElementInArray.split('?')[0]}
             </Link>
           </div>
-          {caption_file && <figcaption>{caption_file}</figcaption>}
+          {captionFile && <figcaption>{captionFile}</figcaption>}
         </figure>
       )
-    case 'bookmark':
+    }
+    case 'bookmark': {
       const href = value.url
       return (
-        <a href={href} target="_brank" className={styles.bookmark}>
+        <a
+          href={href}
+          target="_blank"
+          rel="noreferrer noopener"
+          className={styles.bookmark}
+        >
           {href}
         </a>
       )
+    }
     case 'table': {
       return (
         <table className={styles.table}>
           <tbody>
-            {block.children?.map((child, i) => {
-              const RowElement = value.has_column_header && i == 0 ? 'th' : 'td'
+            {block.children?.map((child, index) => {
+              const RowElement =
+                value.has_column_header && index === 0 ? 'th' : 'td'
               return (
                 <tr key={child.id}>
                   {child.table_row?.cells?.map((cell, i) => (
                     <RowElement key={`${cell.plain_text}-${i}`}>
-                      <Text text={cell} />
+                      <Text title={cell} />
                     </RowElement>
                   ))}
                 </tr>
@@ -209,7 +171,7 @@ const renderBlock = (block) => {
     case 'column_list': {
       return (
         <div className={styles.row}>
-          {block.children.map((block) => renderBlock(block))}
+          {block.children.map((childBlock) => renderBlock(childBlock))}
         </div>
       )
     }
@@ -236,54 +198,15 @@ const renderBlock = (block) => {
   }
 }
 
-export default function Post({ page, blocks }) {
-  if (!page || !blocks) {
-    return <div />
+export function renderNestedList(blocks) {
+  const { type } = blocks
+  const value = blocks[type]
+  if (!value) return null
+
+  const isNumberedList = value.children[0].type === 'numbered_list_item'
+
+  if (isNumberedList) {
+    return <ol>{value.children.map((block) => renderBlock(block))}</ol>
   }
-  return (
-    <div>
-      <Head>
-        <title>{page.properties.Name.title[0].plain_text}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <article className={styles.container}>
-        <h1 className={styles.name}>
-          <Text text={page.properties.Name.title} />
-        </h1>
-        <section>
-          {blocks.map((block) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
-          ))}
-          <Link href="/" className={styles.back}>
-            ← Go home
-          </Link>
-        </section>
-      </article>
-    </div>
-  )
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const database = await getDatabase(databaseId)
-  return {
-    paths: database.map((page) => ({ params: { id: page.id } })),
-    fallback: true,
-  }
-}
-
-export const getStaticProps: GetStaticProps<{}, { id: string }> = async (
-  context
-) => {
-  const id = context.params?.id
-  const page = await getPage(id)
-  const blocks = await getBlocks(id)
-
-  return {
-    props: {
-      page,
-      blocks,
-    },
-    revalidate: false,
-  }
+  return <ul>{value.children.map((block) => renderBlock(block))}</ul>
 }
