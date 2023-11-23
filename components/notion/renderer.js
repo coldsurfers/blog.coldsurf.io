@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 import Text from '../text'
 import styles from '../../styles/post.module.css'
+import SpotifyEmbed from '../embed'
 
 export function renderBlock(block) {
   const { type, id } = block
@@ -191,6 +192,8 @@ export function renderBlock(block) {
           {value.icon.emoji} {value.rich_text[0].plain_text}
         </div>
       )
+    case 'embed':
+      return <SpotifyEmbed spotifyURL={block.embed.url} />
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
