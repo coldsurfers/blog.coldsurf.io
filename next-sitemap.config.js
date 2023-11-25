@@ -5,6 +5,6 @@ module.exports = {
   sitemapSize: 1000,
   // optional
   robotsTxtOptions: {
-    additionalSitemaps: ['https://blog.coldsurf.io/server-sitemap.xml'],
+    additionalSitemaps: [`${process.env.SITE_URL}/server-sitemap.xml`],
   },
 }
