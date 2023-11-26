@@ -1,16 +1,11 @@
 import Link from 'next/link'
-import { databaseId, getDatabase } from '../lib/notion'
+import { databaseId } from '../lib/notion'
 import Text from '../components/text'
 import styles from './index.module.css'
-
-async function getPosts() {
-  const database = await getDatabase()
-
-  return database
-}
+import { getInternalPosts } from '../lib/getInternalPosts'
 
 export default async function Page() {
-  const posts = await getPosts()
+  const posts = await getInternalPosts()
   return (
     <div>
       <main className={styles.container}>
@@ -65,29 +60,18 @@ export default async function Page() {
 
         <h2 className={styles.heading}>All Posts</h2>
         <ol className={styles.posts}>
-          {posts.map((post) => {
-            const date = new Date(post.last_edited_time).toLocaleString(
-              'en-US',
-              {
-                month: 'short',
-                day: '2-digit',
-                year: 'numeric',
-              }
-            )
-            const slug = post.properties?.Slug?.rich_text?.at(0)?.text.content
-            return (
-              <li key={post.id} className={styles.post}>
-                <h3 className={styles.postTitle}>
-                  <Link href={`/article/${slug}`}>
-                    <Text title={post.properties?.Name?.title} />
-                  </Link>
-                </h3>
+          {posts.map((post) => (
+            <li key={post.id} className={styles.post}>
+              <h3 className={styles.postTitle}>
+                <Link href={`/article/${post.slug}`}>
+                  <Text title={post.title} />
+                </Link>
+              </h3>
 
-                <p className={styles.postDescription}>{date}</p>
-                <Link href={`/article/${slug}`}>Read post →</Link>
-              </li>
-            )
-          })}
+              <p className={styles.postDescription}>{post.dateLocale}</p>
+              <Link href={`/article/${post.slug}`}>Read post →</Link>
+            </li>
+          ))}
         </ol>
       </main>
     </div>
