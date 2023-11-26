@@ -2,18 +2,16 @@ import { Fragment } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 
-import { getDatabase, getBlocks, getPageFromSlug } from '../../../lib/notion'
+import { getBlocks, getPageFromSlug } from '../../../lib/notion'
 import Text from '../../../components/text'
 import { renderBlock } from '../../../components/notion/renderer'
 import styles from '../../../styles/post.module.css'
+import { getInternalPosts } from '../../../lib/getInternalPosts'
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-  const database = await getDatabase()
-  return database?.map((page) => {
-    const slug = page.properties.Slug?.formula?.string
-    return { id: page.id, slug }
-  })
+  const posts = await getInternalPosts()
+  return posts?.map((post) => ({ id: post.id, slug: post.slug }))
 }
 
 export default async function Page({ params }) {
