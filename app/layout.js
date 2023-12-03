@@ -20,18 +20,16 @@ export default function RootLayout({ children }) {
           content="t8pam4eI0ydfgF_W2Js3Q9bdfCsbvZA83PSE2JDh1ww"
         />
         {/* <!-- Google tag (gtag.js) --> */}
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-VDP9GWZWGR"
-        />
-        <Script
-          content={`
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-VDP9GWZWGR" />
+        <Script id="google-analytics">
+          {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', 'G-VDP9GWZWGR');`}
-        />
+          gtag('config', 'G-VDP9GWZWGR');
+        `}
+        </Script>
       </head>
       <body className={inter.className}>{children}</body>
     </html>
