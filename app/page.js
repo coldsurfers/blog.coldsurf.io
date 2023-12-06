@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Text from '../components/text'
 import styles from './index.module.css'
-import { getInternalPosts } from '../lib/getInternalPosts'
+import { getInternalPosts } from '../lib/utils'
 
 export default async function Page() {
   const posts = await getInternalPosts()

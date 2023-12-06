@@ -6,12 +6,22 @@ import { getBlocks, getPageFromSlug } from '../../../lib/notion'
 import Text from '../../../components/text'
 import { renderBlock } from '../../../components/notion/renderer'
 import styles from '../../../styles/post.module.css'
-import { getInternalPosts } from '../../../lib/getInternalPosts'
+import { getInternalPosts } from '../../../lib/utils'
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
   const posts = await getInternalPosts()
   return posts?.map((post) => ({ id: post.id, slug: post.slug }))
+}
+
+export async function generateMetadata({ params }) {
+  // fetch data
+  const page = await getPageFromSlug(params?.slug)
+  const pageTitle = page.properties.Name.title.at(0)?.plain_text
+  return {
+    title: `${pageTitle} | Blog, ColdSurf`,
+    description: `${pageTitle}`,
+  }
 }
 
 export default async function Page({ params }) {
