@@ -1,5 +1,5 @@
 import { getServerSideSitemap } from 'next-sitemap'
-import { getInternalPosts } from '../../../lib/getInternalPosts'
+import { getInternalPosts } from '../../../lib/utils'
 
 export async function GET() {
   // Method to source urls from cms
