@@ -3,7 +3,7 @@ name: deploy production website
   push:
     branches:
       - master
-  workflow_dispatch
+  workflow_dispatch:
 
 env:
   NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
