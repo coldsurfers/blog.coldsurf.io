@@ -1,11 +1,9 @@
-name: deploy website
+name: deploy production website
 "on":
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,6 +12,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: "yarn"
+      - run: yarn install --immutable
       - run: yarn build
       - uses: amondnet/vercel-action@v20 #deploy
         with:
