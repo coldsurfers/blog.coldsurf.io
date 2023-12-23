@@ -12,8 +12,7 @@ export default async function Page() {
           <h1>SurfLog</h1>
           <h2>One Man Corporation Blog</h2>
           <p>
-            ColdSurf is one man corporation. I write some inspirations to this
-            blog.
+            {`ColdSurf is one man corporation.\nI write some inspirations to this blog.\nBecause I am easily inspired by films and music.`}
           </p>
         </header>
 
