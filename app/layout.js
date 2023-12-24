@@ -1,4 +1,5 @@
 import Script from 'next/script'
+// eslint-disable-next-line import/no-unresolved
 import '@coldsurfers/ocean-road/global.css'
 
 import { Inter } from 'next/font/google'
