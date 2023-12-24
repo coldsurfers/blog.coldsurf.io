@@ -36,7 +36,6 @@ export default async function Page({ params }) {
     <div>
       <Head>
         <title>{page.properties.Title?.title[0].plain_text}</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <article className={styles.container}>
