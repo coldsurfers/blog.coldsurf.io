@@ -5,6 +5,8 @@ import Text from '../text'
 import styles from '../../styles/post.module.css'
 import SpotifyEmbed from '../embed'
 
+const SUPPORTED_VIDEO_URLS = ['https://www.youtube.com', 'https://youtube.com']
+
 export function renderBlock(block) {
   const { type, id } = block
   const value = block[type]
@@ -194,6 +196,30 @@ export function renderBlock(block) {
       )
     case 'embed':
       return <SpotifyEmbed spotifyURL={block.embed.url} />
+    case 'video':
+      // eslint-disable-next-line no-case-declarations
+      const videoUrl = block.video?.external?.url ?? ''
+      // eslint-disable-next-line no-case-declarations
+      const isSupportedVideoUrl = SUPPORTED_VIDEO_URLS.some((supported) =>
+        videoUrl.startsWith(supported)
+      )
+      if (isSupportedVideoUrl) {
+        return (
+          <iframe
+            id="player"
+            type="text/html"
+            style={{
+              width: '100%',
+              minHeight: '360px',
+            }}
+            src={videoUrl}
+            frameBorder="0"
+          />
+        )
+      }
+      return `❌ Unsupported video url (${
+        type === 'unsupported' ? 'unsupported by Notion API' : type
+      })`
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
