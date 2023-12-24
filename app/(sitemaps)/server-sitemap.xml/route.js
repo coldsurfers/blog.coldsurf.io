@@ -12,7 +12,7 @@ export async function GET() {
     },
     ...posts.map((post) => ({
       loc: `${process.env.SITE_URL}/article/${post.slug}`,
-      lastmod: post.date.toISOString(),
+      lastmod: post.lastEditedTime.toISOString(),
     })),
   ]
 

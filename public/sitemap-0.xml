@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://surflog.coldsurf.io/server-sitemap.xml</loc><lastmod>2023-12-16T14:42:12.381Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://surflog.coldsurf.io</loc><lastmod>2023-12-16T14:42:12.381Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://surflog.coldsurf.io/article/install-playstore-android-emulator</loc><lastmod>2023-12-16T14:42:12.381Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://surflog.coldsurf.io/article/sns-problems</loc><lastmod>2023-12-16T14:42:12.381Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://surflog.coldsurf.io/article/punk-and-metal</loc><lastmod>2023-12-16T14:42:12.381Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://surflog.coldsurf.io/server-sitemap.xml</loc><lastmod>2023-12-24T04:16:41.536Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://surflog.coldsurf.io</loc><lastmod>2023-12-24T04:16:41.536Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://surflog.coldsurf.io/article/the-two-popes-everyone-has-concerns</loc><lastmod>2023-12-24T04:16:41.536Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://surflog.coldsurf.io/article/memento-what-if-we-dont-remember-ourselves</loc><lastmod>2023-12-24T04:16:41.536Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://surflog.coldsurf.io/article/install-playstore-android-emulator</loc><lastmod>2023-12-24T04:16:41.536Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://surflog.coldsurf.io/article/sns-problems</loc><lastmod>2023-12-24T04:16:41.536Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://surflog.coldsurf.io/article/punk-and-metal</loc><lastmod>2023-12-24T04:16:41.536Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://surflog.coldsurf.io/article/what-is-event-loop</loc><lastmod>2023-12-24T04:16:41.536Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>
