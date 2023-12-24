@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: "yarn"
+      - run: npm config set @coldsurfers:registry https://npm.pkg.github.com/
+      - run: npm config set '//npm.pkg.github.com/:_authToken' ${{ secrets.GITHUB_TOKEN }}
       - run: yarn install --immutable
       - run: yarn build
       - uses: amondnet/vercel-action@v20 #deploy
