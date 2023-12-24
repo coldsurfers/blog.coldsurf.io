@@ -17,6 +17,7 @@
     "Adam Beleko <bossbele@larven.io> (https://github.com/BossBele)"
   ],
   "dependencies": {
+    "@coldsurfers/ocean-road": "1.5.1-rc.1",
     "@notionhq/client": "^2.2.3",
     "axios": "^1.4.0",
     "form-data": "^4.0.0",

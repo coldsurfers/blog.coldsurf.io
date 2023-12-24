@@ -1,5 +1,5 @@
 import Script from 'next/script'
-import '../styles/globals.css'
+import '@coldsurfers/ocean-road/global.css'
 
 import { Inter } from 'next/font/google'
 

@@ -24,6 +24,20 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@coldsurfers/design-tokens@1.10.0":
+  version "1.10.0"
+  resolved "https://npm.pkg.github.com/download/@coldsurfers/design-tokens/1.10.0/5de0ababed32a75c695afe2c506266568a9431fe#5de0ababed32a75c695afe2c506266568a9431fe"
+  integrity sha512-sMSCk9ONXaNCYxsD5vdn7nal1KZWqwi2RdjXghusfK7RMmTW//Bxpcl/xseuuozMakGPHKD3nji65rl1180Wvg==
+  dependencies:
+    open-color "^1.9.1"
+
+"@coldsurfers/ocean-road@1.5.1-rc.1":
+  version "1.5.1-rc.1"
+  resolved "https://npm.pkg.github.com/download/@coldsurfers/ocean-road/1.5.1-rc.1/1afe3ae8f34cb8cf191d9293c275dce7bb7554c7#1afe3ae8f34cb8cf191d9293c275dce7bb7554c7"
+  integrity sha512-U6q6DiQYgVfNuom9xB37OPLz2BP3tNMcTGFk4EJ9EkcaBwO4FIu7x5Y9lEoaNinISgGj3O1ShMMlStcOmJIZww==
+  dependencies:
+    "@coldsurfers/design-tokens" "1.10.0"
+
 "@corex/deepmerge@^4.0.43":
   version "4.0.43"
   resolved "https://registry.yarnpkg.com/@corex/deepmerge/-/deepmerge-4.0.43.tgz#9bd42559ebb41cc5a7fb7cfeea5f231c20977dca"
@@ -2006,6 +2020,11 @@ onetime@^6.0.0:
   resolved "https://registry.yarnpkg.com/onetime/-/onetime-6.0.0.tgz#7c24c18ed1fd2e9bca4bd26806a33613c77d34b4"
   dependencies:
     mimic-fn "^4.0.0"
+
+open-color@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/open-color/-/open-color-1.9.1.tgz#a6e6328f60eff7aa60e3e8fcfa50f53ff3eece35"
+  integrity sha512-vCseG/EQ6/RcvxhUcGJiHViOgrtz4x0XbZepXvKik66TMGkvbmjeJrKFyBEx6daG5rNyyd14zYXhz0hZVwQFOw==
 
 open@^9.1.0:
   version "9.1.0"
