@@ -11,12 +11,12 @@ import { getInternalPosts } from '../../../lib/utils'
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
   const posts = await getInternalPosts()
-  return posts?.map((post) => ({ id: post.id, slug: post.slug }))
+  return posts?.map((post) => ({ slug: post.slug }))
 }
 
 export async function generateMetadata({ params }) {
   // fetch data
-  const page = await getPageFromSlug(params?.slug)
+  const page = await getPageFromSlug(params?.slug ?? '')
   const pageTitle = page.properties.Name.title.at(0)?.plain_text
   return {
     title: `${pageTitle} | Blog, ColdSurf`,
@@ -25,7 +25,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const page = await getPageFromSlug(params?.slug)
+  const page = await getPageFromSlug(params?.slug ?? '')
+
   const blocks = await getBlocks(page?.id)
 
   if (!page || !blocks) {

@@ -31,6 +31,11 @@
   dependencies:
     open-color "^1.9.1"
 
+"@coldsurfers/notion-utils@^1.0.1-rc.5":
+  version "1.0.1-rc.5"
+  resolved "https://npm.pkg.github.com/download/@coldsurfers/notion-utils/1.0.1-rc.5/81183d61bde8a6d3b02045c5483df8f4c5051b17#81183d61bde8a6d3b02045c5483df8f4c5051b17"
+  integrity sha512-IIsRyHr7pJpKwRb+lWQAjeaGkC6cyf5rZSU4Z+m1B0Fdjc1kahcqHLxW1gqKonzHSf3HzKn71H/b15Zax5oJCw==
+
 "@coldsurfers/ocean-road@1.5.1-rc.1":
   version "1.5.1-rc.1"
   resolved "https://npm.pkg.github.com/download/@coldsurfers/ocean-road/1.5.1-rc.1/1afe3ae8f34cb8cf191d9293c275dce7bb7554c7#1afe3ae8f34cb8cf191d9293c275dce7bb7554c7"
